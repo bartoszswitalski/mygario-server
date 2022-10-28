@@ -22,7 +22,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: bswitals/mygario-server:latest
+          tags: bswitalski/mygario-server:latest
   update-VPS-container:
     needs: build-and-push
     runs-on: ubuntu-latest
@@ -35,6 +35,6 @@ jobs:
           PORT: ${{ secrets.SSH_PORT }}
           KEY: ${{ secrets.SSH_PUB_KEY }}
           script: |
-            docker stop $(docker ps -q --filter ancestor=bswitals/mygario-server )
-            docker pull bswitals/mygario-server
-            docker run -e -d -p 3000:3000 bswitals/mygario-server
+            docker stop $(docker ps -q --filter ancestor=bswitalski/mygario-server )
+            docker pull bswitalski/mygario-server
+            docker run -e -d -p 3000:3000 bswitalski/mygario-server

@@ -33,7 +33,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           USERNAME: ${{ secrets.SSH_USERNAME }}
           PORT: ${{ secrets.SSH_PORT }}
-          KEY: ${{ secrets.SSH_PUB_KEY }}
+          KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker stop $(docker ps -q --filter ancestor=bswitalski/mygario-server )
             docker pull bswitalski/mygario-server

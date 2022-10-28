@@ -1,28 +1,30 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from 'src/entities/user.entity';
+import { EventsGateway } from 'src/modules/websocket/events.gateway';
 
 @Injectable()
 export class UsersService {
     private static readonly MAX_USERS = 2;
-    private _users: User[];
+    #users: Map<string, User>;
 
-    constructor() {
-        this._users = [];
+    constructor(private readonly eventsGateway: EventsGateway) {
+        this.#users = new Map();
     }
 
-    addUser(userName: string) {
-        if (this._users.length === UsersService.MAX_USERS) {
+    addUser(userName: string): void {
+        if (this.#users.size === UsersService.MAX_USERS) {
             throw new BadRequestException('Maximum number of users reached');
         }
 
-        if (this._users.some((user) => user.name === userName)) {
+        if (this.#users.has(userName)) {
             throw new BadRequestException('User of this name already exists');
         }
 
-        this._users.push({ name: userName });
+        this.#users.set(userName, { name: userName, position: { x: 0, y: 0 }, size: 1 });
+        this.eventsGateway.handleNewPlayer({ userName });
     }
 
-    deleteUser(userName: string) {
-        this._users = this._users.filter((user) => user.name !== userName);
+    deleteUser(userName: string): void {
+        this.#users.delete(userName);
     }
 }

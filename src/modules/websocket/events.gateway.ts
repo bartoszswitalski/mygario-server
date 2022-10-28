@@ -12,28 +12,40 @@ import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from 'src/modules/auth/auth.service';
-import { Coords } from 'src/types/coords.type';
+import { MovePlayerMessage } from 'src/modules/websocket/player-move-player.message';
+import { GrowPlayerMessage } from 'src/modules/websocket/player-grow-player.message';
+import { NewPlayerMessage } from 'src/modules/websocket/player-new-player.message';
+import { RemovePlayerMessage } from 'src/modules/websocket/player-lose.message';
 
 @WebSocketGateway()
 export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer() server: Server;
-    private logger: Logger = new Logger('EventsGateway');
+    #logger: Logger = new Logger('EventsGateway');
 
     constructor(private readonly jwtService: JwtService) {}
 
-    @SubscribeMessage('newPlayerToServer')
-    handleNewPlayer(@ConnectedSocket() client: Socket, @MessageBody() playerName: string): void {
-        this.server.emit('newPlayerToClient', playerName);
+    handleNewPlayer(message: NewPlayerMessage): void {
+        this.server.emit('newPlayerToClient', message);
     }
 
-    @SubscribeMessage('playerMoveToServer')
-    handlePlayerMove(@ConnectedSocket() client: Socket, @MessageBody() coords: Coords) {
-        this.server.emit('playerMoveToClient', coords);
+    @SubscribeMessage('movePlayerToServer')
+    handlePlayerMove(@ConnectedSocket() client: Socket, @MessageBody() message: MovePlayerMessage): void {
+        this.server.emit('playerMoveToClient', message);
+    }
+
+    @SubscribeMessage('growPlayerToServer')
+    handlePlayerGrow(@ConnectedSocket() client: Socket, @MessageBody() message: GrowPlayerMessage): void {
+        this.server.emit('growPlayerToClient', message);
+    }
+
+    @SubscribeMessage('removePlayerToServer')
+    handleRemovePlayer(@ConnectedSocket() client: Socket, @MessageBody() message: RemovePlayerMessage): void {
+        this.server.emit('removePlayerToClient', message);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     afterInit(server: Server) {
-        this.logger.log('init');
+        this.#logger.log('init');
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,12 +59,12 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
             client.disconnect();
         }
 
-        this.logger.log(`Client connected: ${client.id}`);
+        this.#logger.log(`Client connected: ${client.id}`);
         client.broadcast.emit('connectionMessage', `${decodedPayload.sub} connected`);
     }
 
     handleDisconnect(client: Socket) {
-        const token = client.handshake.query.token as string;
-        this.logger.log(`Client disconnected: ${client.id}`);
+        // todo: remove player on disconnect
+        this.#logger.log(`Client disconnected: ${client.id}`);
     }
 }

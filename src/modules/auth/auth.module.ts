@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { AuthController } from 'src/modules/auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { UsersService } from 'src/modules/users/users.service';
+import { UsersService } from 'src/modules/auth/users.service';
 
 @Module({
     imports: [JwtModule.register(AuthModule.JWT_OPTIONS)],

@@ -1,13 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { User } from 'src/entities/user.entity';
-import { EventsGateway } from 'src/modules/websocket/events.gateway';
 
 @Injectable()
 export class UsersService {
     private static readonly MAX_USERS = 2;
     #users: Map<string, User>;
 
-    constructor(private readonly eventsGateway: EventsGateway) {
+    constructor() {
         this.#users = new Map();
     }
 
@@ -21,7 +20,6 @@ export class UsersService {
         }
 
         this.#users.set(userName, { name: userName, position: { x: 0, y: 0 }, size: 1 });
-        this.eventsGateway.handleNewPlayer({ userName });
     }
 
     deleteUser(userName: string): void {

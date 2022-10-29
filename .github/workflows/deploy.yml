@@ -37,4 +37,4 @@ jobs:
           script: |
             docker stop $(docker ps -q --filter ancestor=bswitalski/mygario-server ) || true
             docker pull bswitalski/mygario-server
-            docker run -e -d -p 3000:3000 bswitalski/mygario-server
+            docker run -d -p 3000:3000 bswitalski/mygario-server

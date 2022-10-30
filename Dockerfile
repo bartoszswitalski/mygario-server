@@ -1,13 +1,24 @@
-FROM node:18 as production
+FROM node:18 as build
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn global add @nestjs/cli
-
-RUN yarn install
+RUN yarn
 
 COPY . .
 
-CMD ["yarn", "start"]
+RUN yarn build
+
+RUN yarn install --frozen-lockfile --production && yarn cache clean
+
+FROM node:18 as production
+
+ENV NODE_ENV production
+
+WORKDIR /usr/src/app
+
+COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/dist ./dist
+
+CMD ["node", "dist/main"]

@@ -12,10 +12,10 @@ import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { TokenPayload } from 'src/modules/auth/auth.service';
-import { MovePlayerMessage } from 'src/modules/websocket/player-move-player.message';
-import { GrowPlayerMessage } from 'src/modules/websocket/player-grow-player.message';
-import { NewPlayerMessage } from 'src/modules/websocket/player-new-player.message';
-import { RemovePlayerMessage } from 'src/modules/websocket/player-lose.message';
+import { MovePlayerMessage } from 'src/modules/websocket/messages/player-move-player.message';
+import { GrowPlayerMessage } from 'src/modules/websocket/messages/player-grow-player.message';
+import { NewPlayerMessage } from 'src/modules/websocket/messages/player-new-player.message';
+import { RemovePlayerMessage } from 'src/modules/websocket/messages/player-lose.message';
 
 @WebSocketGateway()
 export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {

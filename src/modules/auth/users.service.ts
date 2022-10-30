@@ -3,7 +3,7 @@ import { User } from 'src/entities/user.entity';
 
 @Injectable()
 export class UsersService {
-    private static readonly MAX_USERS = 2;
+    private static readonly MAX_USERS = 10;
     #users: Map<string, User>;
 
     constructor() {

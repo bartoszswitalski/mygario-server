@@ -4,7 +4,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn global add rimraf @nestjs/cli
+RUN yarn global add @nestjs/cli
 
 RUN yarn install
 

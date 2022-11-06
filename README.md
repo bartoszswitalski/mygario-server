@@ -1,73 +1,69 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# mygario-server
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Server for realtime multiplayer game inspired by a popular web application [agar.io](https://agar.io/).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+* [General Info](#general-information)
+* [Technologies Used](#technologies-used)
+* [Setup](#setup)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
+* [Acknowledgements](#acknowledgements)
+* [Contact](#contact)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## General Information
 
-## Installation
+- Server is written in [NestJS](https://nestjs.com/), a progressive Node.js framework for building efficient, reliable
+  and scalable
+  server-side applications.
+- It uses [Socket.IO](https://socket.io/) for realtime communication between server and clients.
+- The purpose of this project is to learn how to implement a websocket communication in a realtime web application.
 
-```bash
-$ npm install
-```
+## Technologies Used
 
-## Running the app
+- Node.js
+- WebSockets
+- Docker
+- VPS
+- gh-actions (CI/CD)
 
-```bash
-# development
-$ npm run start
+## Setup
 
-# watch mode
-$ npm run start:dev
+Environment requirements:
 
-# production mode
-$ npm run start:prod
-```
-
-## Test
+* Node.js 18 or higher
 
 ```bash
-# unit tests
-$ npm run test
+# To run this project, first install its dependencies:
+yarn
+# Then run the server:
+yarn start:dev # with hot-reload
+yarn start # production mode
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# by default the server runs on port 3000
 ```
 
-## Support
+## Usage
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+* The server is deployed on a VPS and runs in a docker container.
+* I've set up a reverse proxy with nginx to make it visible for the outside world.
+* CI/CD for this project is configured so that with each push to the main branch, the server application Docker image
+  is automatically rebuilt and deployed to the VPS.
 
-## Stay in touch
+## Project Status
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Project is: _in progress_ / ~~_complete_~~ / ~~_no longer being worked on_~~.
 
-## License
+## Room for Improvement
 
-Nest is [MIT licensed](LICENSE).
+todo: add when complete
+
+## Acknowledgements
+
+- This project's VPS setup with Docker was inspired by [@ablaszkiewicz](https://github.com/ablaszkiewicz).
+
+## Contact
+
+Created by [@bartoszswitalski](https://github.com/bartoszswitalski)

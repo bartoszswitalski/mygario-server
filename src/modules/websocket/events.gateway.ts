@@ -16,6 +16,7 @@ import { MovePlayerMessage } from 'src/modules/websocket/messages/player-move-pl
 import { GrowPlayerMessage } from 'src/modules/websocket/messages/player-grow-player.message';
 import { NewPlayerMessage } from 'src/modules/websocket/messages/player-new-player.message';
 import { RemovePlayerMessage } from 'src/modules/websocket/messages/player-lose.message';
+import { ClientToServerMessage, ServerToClientMessage } from 'src/modules/websocket/events-gateway.model';
 
 @WebSocketGateway()
 export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
@@ -25,22 +26,20 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     constructor(private readonly jwtService: JwtService) {}
 
     handleNewPlayer(message: NewPlayerMessage): void {
-        this.server.emit('newPlayerToClient', message);
+        this.server.emit(ServerToClientMessage.NewPlayerToClient, message);
     }
 
-    @SubscribeMessage('movePlayerToServer')
+    @SubscribeMessage(ClientToServerMessage.MovePlayerToServer)
     handlePlayerMove(@ConnectedSocket() client: Socket, @MessageBody() message: MovePlayerMessage): void {
-        this.server.emit('playerMoveToClient', message);
+        this.server.emit(ServerToClientMessage.MovePlayerToClient, message);
     }
 
-    @SubscribeMessage('growPlayerToServer')
     handlePlayerGrow(@ConnectedSocket() client: Socket, @MessageBody() message: GrowPlayerMessage): void {
-        this.server.emit('growPlayerToClient', message);
+        this.server.emit(ServerToClientMessage.GrowPlayerToClient, message);
     }
 
-    @SubscribeMessage('removePlayerToServer')
     handleRemovePlayer(@ConnectedSocket() client: Socket, @MessageBody() message: RemovePlayerMessage): void {
-        this.server.emit('removePlayerToClient', message);
+        this.server.emit(ServerToClientMessage.RemovePlayerToClient, message);
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

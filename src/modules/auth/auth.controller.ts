@@ -6,7 +6,10 @@ export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Post('auth/login')
-    login(@Body() requestBody: { userName: string }): Token {
-        return this.authService.login(requestBody.userName);
+    login(@Body() requestBody: { userName: string }): { userName: string; token: Token } {
+        return {
+            userName: requestBody.userName,
+            token: this.authService.login(requestBody.userName),
+        };
     }
 }

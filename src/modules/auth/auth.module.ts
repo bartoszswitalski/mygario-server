@@ -2,15 +2,16 @@ import { Module } from '@nestjs/common';
 import { AuthService } from 'src/modules/auth/auth.service';
 import { AuthController } from 'src/modules/auth/auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { UsersService } from 'src/modules/auth/users.service';
 import { config } from 'dotenv';
+import { UsersModule } from 'src/modules/user/users.module';
 
 config();
 
 @Module({
-    imports: [JwtModule.register(AuthModule.JWT_OPTIONS)],
+    imports: [JwtModule.register(AuthModule.JWT_OPTIONS), UsersModule],
     controllers: [AuthController],
-    providers: [AuthService, UsersService],
+    providers: [AuthService],
+    exports: [AuthService],
 })
 export class AuthModule {
     private static readonly JWT_EXPIRATION_TIME = '30m';

@@ -4,4 +4,5 @@ export type User = {
     name: string;
     position: Coords;
     size: number;
+    color: number;
 };
